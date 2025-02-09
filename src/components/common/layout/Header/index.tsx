@@ -1,4 +1,4 @@
-import { isTesting } from "@/constants/config";
+import { IS_TESTING } from "@/constants/config";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "@tanstack/react-router";
 
@@ -30,7 +30,7 @@ export const Header = () => {
       </h1>
       {token && (
         <>
-          {isTesting && <h1>This Is a Test Instance</h1>}
+          {IS_TESTING && <h1>This Is a Test Instance</h1>}
           <div>
             <p>Logged In Vro</p>
             <button

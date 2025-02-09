@@ -1,4 +1,4 @@
-import { GetDashboardAPI } from "@/services/api";
+import apiService from "@/services/apiService";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -7,8 +7,8 @@ export const Route = createFileRoute("/_authenticated/dashboard/")({
 });
 function RouteComponent() {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["todos"],
-    queryFn: () => GetDashboardAPI(),
+    queryKey: ["apiService.dashboard.get"],
+    queryFn: apiService.dashboard.get,
   });
   if (isLoading) {
     return "...loading";

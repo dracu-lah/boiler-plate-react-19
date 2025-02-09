@@ -1,21 +1,31 @@
+import { BASE_URL } from "@/constants/config";
 import axios, {
   AxiosError,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { RefreshAPI } from "./api";
 
-/**
- * Interface for refresh token API response
- */
-// interface RefreshTokenResponse {
-//   accessToken: string;
-// }
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 /**
  * Queue to hold pending requests while refreshing the token
  */
 let refreshTokenPromise: Promise<string | null> | null = null;
+
+/**
+ * Refresh token API implementation
+ */
+const RefreshTokenAPI = async (tokens: {
+  refreshToken: string;
+  accessToken: string;
+}) => {
+  return api.post<{ accessToken: string }>("/auth/refresh", tokens);
+};
 
 /**
  * Refreshes the access token using the refresh token stored in localStorage
@@ -29,9 +39,9 @@ const refreshToken = async (): Promise<string | null> => {
 
         if (!refreshToken || !accessToken) throw new Error("No tokens found");
 
-        const { data } = await RefreshAPI({ refreshToken, accessToken });
+        const { data } = await RefreshTokenAPI({ refreshToken, accessToken });
         localStorage.setItem("token", data.accessToken);
-        axios.defaults.headers.common["Authorization"] =
+        api.defaults.headers.common["Authorization"] =
           `Bearer ${data.accessToken}`;
 
         return data.accessToken;
@@ -59,7 +69,7 @@ interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
 /**
  * Axios response interceptor for handling token expiration
  */
-axios.interceptors.response.use(
+api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as ExtendedAxiosRequestConfig;
@@ -70,7 +80,7 @@ axios.interceptors.response.use(
 
       if (newAccessToken && originalRequest.headers) {
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        return axios(originalRequest);
+        return api(originalRequest);
       }
     }
 
@@ -83,4 +93,4 @@ axios.interceptors.response.use(
   },
 );
 
-export default axios;
+export default api;
