@@ -26,7 +26,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => (
   <div style={layoutStyles.container}>
     <Header />
     <div style={layoutStyles.mainContainer}>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <main style={layoutStyles.main}>{children}</main>
     </div>
     <Footer />

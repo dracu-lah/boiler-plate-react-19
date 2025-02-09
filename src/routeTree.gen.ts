@@ -19,6 +19,8 @@ import { Route as AuthenticatedModulesIndexImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthRegisterIndexImport } from './routes/_auth/register/index'
 import { Route as AuthLoginIndexImport } from './routes/_auth/login/index'
+import { Route as AuthenticatedModulesAccountingIndexImport } from './routes/_authenticated/modules/accounting/index'
+import { Route as AuthenticatedModulesAccountingGeneralLedgerIndexImport } from './routes/_authenticated/modules/accounting/general-ledger/index'
 
 // Create/Update Routes
 
@@ -67,6 +69,20 @@ const AuthLoginIndexRoute = AuthLoginIndexImport.update({
   path: '/login/',
   getParentRoute: () => AuthRoute,
 } as any)
+
+const AuthenticatedModulesAccountingIndexRoute =
+  AuthenticatedModulesAccountingIndexImport.update({
+    id: '/modules/accounting/',
+    path: '/modules/accounting/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedModulesAccountingGeneralLedgerIndexRoute =
+  AuthenticatedModulesAccountingGeneralLedgerIndexImport.update({
+    id: '/modules/accounting/general-ledger/',
+    path: '/modules/accounting/general-ledger/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -128,6 +144,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAboutIndexImport
       parentRoute: typeof PublicImport
     }
+    '/_authenticated/modules/accounting/': {
+      id: '/_authenticated/modules/accounting/'
+      path: '/modules/accounting'
+      fullPath: '/modules/accounting'
+      preLoaderRoute: typeof AuthenticatedModulesAccountingIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/modules/accounting/general-ledger/': {
+      id: '/_authenticated/modules/accounting/general-ledger/'
+      path: '/modules/accounting/general-ledger'
+      fullPath: '/modules/accounting/general-ledger'
+      preLoaderRoute: typeof AuthenticatedModulesAccountingGeneralLedgerIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
   }
 }
 
@@ -148,11 +178,17 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedModulesIndexRoute: typeof AuthenticatedModulesIndexRoute
+  AuthenticatedModulesAccountingIndexRoute: typeof AuthenticatedModulesAccountingIndexRoute
+  AuthenticatedModulesAccountingGeneralLedgerIndexRoute: typeof AuthenticatedModulesAccountingGeneralLedgerIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedModulesIndexRoute: AuthenticatedModulesIndexRoute,
+  AuthenticatedModulesAccountingIndexRoute:
+    AuthenticatedModulesAccountingIndexRoute,
+  AuthenticatedModulesAccountingGeneralLedgerIndexRoute:
+    AuthenticatedModulesAccountingGeneralLedgerIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -177,6 +213,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
+  '/modules/accounting': typeof AuthenticatedModulesAccountingIndexRoute
+  '/modules/accounting/general-ledger': typeof AuthenticatedModulesAccountingGeneralLedgerIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -186,6 +224,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
+  '/modules/accounting': typeof AuthenticatedModulesAccountingIndexRoute
+  '/modules/accounting/general-ledger': typeof AuthenticatedModulesAccountingGeneralLedgerIndexRoute
 }
 
 export interface FileRoutesById {
@@ -198,13 +238,31 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/modules/': typeof AuthenticatedModulesIndexRoute
   '/_public/about/': typeof PublicAboutIndexRoute
+  '/_authenticated/modules/accounting/': typeof AuthenticatedModulesAccountingIndexRoute
+  '/_authenticated/modules/accounting/general-ledger/': typeof AuthenticatedModulesAccountingGeneralLedgerIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/register' | '/dashboard' | '/modules' | '/about'
+  fullPaths:
+    | ''
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/modules'
+    | '/about'
+    | '/modules/accounting'
+    | '/modules/accounting/general-ledger'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/login' | '/register' | '/dashboard' | '/modules' | '/about'
+  to:
+    | ''
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/modules'
+    | '/about'
+    | '/modules/accounting'
+    | '/modules/accounting/general-ledger'
   id:
     | '__root__'
     | '/_auth'
@@ -215,6 +273,8 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/'
     | '/_authenticated/modules/'
     | '/_public/about/'
+    | '/_authenticated/modules/accounting/'
+    | '/_authenticated/modules/accounting/general-ledger/'
   fileRoutesById: FileRoutesById
 }
 
@@ -256,7 +316,9 @@ export const routeTree = rootRoute
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/dashboard/",
-        "/_authenticated/modules/"
+        "/_authenticated/modules/",
+        "/_authenticated/modules/accounting/",
+        "/_authenticated/modules/accounting/general-ledger/"
       ]
     },
     "/_public": {
@@ -284,6 +346,14 @@ export const routeTree = rootRoute
     "/_public/about/": {
       "filePath": "_public/about/index.tsx",
       "parent": "/_public"
+    },
+    "/_authenticated/modules/accounting/": {
+      "filePath": "_authenticated/modules/accounting/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/modules/accounting/general-ledger/": {
+      "filePath": "_authenticated/modules/accounting/general-ledger/index.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

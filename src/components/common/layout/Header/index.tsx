@@ -22,7 +22,12 @@ export const Header = () => {
   return (
     <header style={headerStyles.header}>
       {" "}
-      <h1 style={headerStyles.title}>My App</h1>
+      <h1
+        style={headerStyles.title}
+        onClick={() => router.navigate({ to: "/modules" })}
+      >
+        My App
+      </h1>
       {token && (
         <>
           {isTesting && <h1>This Is a Test Instance</h1>}
