@@ -1,17 +1,7 @@
-const footerStyles = {
-  footer: {
-    padding: "1px",
-    backgroundColor: "#f8f9fa",
-    borderTop: "1px solid #dee2e6",
-    textAlign: "center" as const,
-    position: "fixed" as const,
-    bottom: 0,
-    width: "100%",
-  },
-};
-
 export const Footer = () => (
-  <footer style={footerStyles.footer}>
-    <p>© 2025 My App. All rights reserved.</p>
+  <footer className="w-full border-t-2 bg-slate-100 py-3 text-white shadow-md">
+    <p className="text-center text-sm text-black">
+      © Powered by Udyata technologies.
+    </p>
   </footer>
 );
