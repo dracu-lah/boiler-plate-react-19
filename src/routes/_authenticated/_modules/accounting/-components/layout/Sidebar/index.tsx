@@ -32,7 +32,9 @@ export const Sidebar = () => {
     <div style={sidebarStyles.sidebar}>
       <nav>
         <header>
-          <b>Accounting Module</b>
+          <Link to="/accounting">
+            <b>Accounting Module</b>
+          </Link>
         </header>
         <ul style={sidebarStyles.nav}>
           {!token && (
