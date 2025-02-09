@@ -2,6 +2,7 @@ import { IS_TESTING } from "@/constants/config";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
+import ThemeToggle from "../../ThemeToggle";
 
 export const Header = () => {
   const router = useRouter();
@@ -41,6 +42,8 @@ export const Header = () => {
                 <LogOut className="h-4 w-4" />
                 Log out
               </button>
+
+              <ThemeToggle />
             </div>
           </div>
         )}
