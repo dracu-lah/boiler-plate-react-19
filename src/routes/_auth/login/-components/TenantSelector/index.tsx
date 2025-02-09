@@ -27,13 +27,13 @@ export default function TenantSelector({
   };
 
   return (
-    <div className=" h-full w-full flex items-center justify-center bg-gray-100">
-      <div className="w-full  max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
+    <div className="h-full w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-            <Building2 className="h-6 w-6 text-blue-600" />
+          <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+            <Building2 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           </div>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
             Select Your Tenant
           </h2>
         </div>
@@ -41,17 +41,21 @@ export default function TenantSelector({
         <div className="relative">
           <button
             type="button"
-            className="relative w-full bg-white border border-gray-300 rounded-lg py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+            className="relative w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400"
             onClick={() => setIsOpen(!isOpen)}
           >
             <span
-              className={selectedTenant ? "text-gray-900" : "text-gray-500"}
+              className={
+                selectedTenant
+                  ? "text-gray-900 dark:text-white"
+                  : "text-gray-500 dark:text-gray-400"
+              }
             >
               {selectedTenant || "Choose a tenant"}
             </span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-2">
               <svg
-                className="h-5 w-5 text-gray-400"
+                className="h-5 w-5 text-gray-400 dark:text-gray-300"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -66,14 +70,14 @@ export default function TenantSelector({
           </button>
 
           {isOpen && (
-            <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
+            <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-700 shadow-lg max-h-60 rounded-md py-1 ring-1 ring-black dark:ring-gray-600 ring-opacity-5 overflow-auto focus:outline-none">
               {tenants.map((tenant) => (
                 <div
                   key={tenant}
-                  className={`cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-blue-50 ${
+                  className={`cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-blue-50 dark:hover:bg-blue-900 ${
                     selectedTenant === tenant
-                      ? "bg-blue-50 text-blue-600"
-                      : "text-gray-900"
+                      ? "bg-blue-50 dark:bg-blue-800 text-blue-600 dark:text-blue-400"
+                      : "text-gray-900 dark:text-white"
                   }`}
                   onClick={() => {
                     setSelectedTenant(tenant);
@@ -82,7 +86,7 @@ export default function TenantSelector({
                 >
                   {tenant}
                   {selectedTenant === tenant && (
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600 dark:text-blue-400">
                       <svg
                         className="h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -109,8 +113,8 @@ export default function TenantSelector({
           className={`mt-6 w-full rounded-lg px-4 py-2 text-white font-medium
           ${
             selectedTenant
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-blue-300 cursor-not-allowed"
+              ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              : "bg-blue-300 dark:bg-blue-700 cursor-not-allowed"
           }
         `}
         >

@@ -47,7 +47,7 @@ const BaseLink = forwardRef<
     <a
       ref={ref}
       {...rest}
-      className={`group relative overflow-hidden rounded-xl p-6 transition-all duration-300 hover:shadow-lg ${color}`}
+      className={`group relative overflow-hidden rounded-xl px-6 py-12 transition-all duration-300 hover:shadow-lg ${color}`}
     >
       <div className="relative z-10">{children}</div>
       <div className="absolute inset-0 z-0 bg-black opacity-0 transition-opacity group-hover:opacity-10" />
@@ -63,8 +63,8 @@ export const CustomLink: LinkComponent<typeof BaseLink> = (props) => (
 
 function RouteComponent(): JSX.Element {
   return (
-    <div className="p-8 bg-gray-100 h-full">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">
+    <div className="p-8 bg-gray-100 dark:bg-gray-900 h-full">
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
         Available Modules
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -72,7 +72,7 @@ function RouteComponent(): JSX.Element {
           const Icon = module.icon;
           return (
             <CustomLink key={module.to} to={module.to} color={module.color}>
-              <div className="flex flex-col items-center text-white">
+              <div className="flex flex-col items-center text-white dark:text-gray-200">
                 <Icon className="h-8 w-8 mb-3" />
                 <span className="text-lg font-semibold">{module.label}</span>
               </div>

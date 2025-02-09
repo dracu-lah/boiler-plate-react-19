@@ -9,7 +9,7 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
-    <div className="flex min-h-screen flex-col justify-between font-sans">
+    <div className="flex min-h-screen flex-col justify-between font-sans dark:bg-gray-900">
       <Header />
       <div className="flex flex-1">
         <main className="flex-1 ">{children}</main>
