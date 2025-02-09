@@ -1,5 +1,4 @@
 import {
-  useRouter,
   createLink,
   LinkComponent,
   createFileRoute,

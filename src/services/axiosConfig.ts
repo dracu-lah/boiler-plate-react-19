@@ -8,9 +8,9 @@ import { RefreshAPI } from "./api";
 /**
  * Interface for refresh token API response
  */
-interface RefreshTokenResponse {
-  accessToken: string;
-}
+// interface RefreshTokenResponse {
+//   accessToken: string;
+// }
 
 /**
  * Queue to hold pending requests while refreshing the token
