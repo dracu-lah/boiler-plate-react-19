@@ -14,11 +14,15 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as PublicImport } from './routes/_public'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthImport } from './routes/_auth'
+import { Route as PublicTestIndexImport } from './routes/_public/test/index'
 import { Route as PublicContactIndexImport } from './routes/_public/contact/index'
 import { Route as PublicAboutIndexImport } from './routes/_public/about/index'
+import { Route as AuthenticatedModulesIndexImport } from './routes/_authenticated/modules/index'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthRegisterIndexImport } from './routes/_auth/register/index'
 import { Route as AuthLoginIndexImport } from './routes/_auth/login/index'
+import { Route as AuthLoginComponentsTenantSelectorIndexImport } from './routes/_auth/login/_components/TenantSelector/index'
+import { Route as AuthLoginComponentsLoginFormIndexImport } from './routes/_auth/login/_components/LoginForm/index'
 
 // Create/Update Routes
 
@@ -37,6 +41,12 @@ const AuthRoute = AuthImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PublicTestIndexRoute = PublicTestIndexImport.update({
+  id: '/test/',
+  path: '/test/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
 const PublicContactIndexRoute = PublicContactIndexImport.update({
   id: '/contact/',
   path: '/contact/',
@@ -47,6 +57,12 @@ const PublicAboutIndexRoute = PublicAboutIndexImport.update({
   id: '/about/',
   path: '/about/',
   getParentRoute: () => PublicRoute,
+} as any)
+
+const AuthenticatedModulesIndexRoute = AuthenticatedModulesIndexImport.update({
+  id: '/modules/',
+  path: '/modules/',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedDashboardIndexRoute =
@@ -67,6 +83,20 @@ const AuthLoginIndexRoute = AuthLoginIndexImport.update({
   path: '/login/',
   getParentRoute: () => AuthRoute,
 } as any)
+
+const AuthLoginComponentsTenantSelectorIndexRoute =
+  AuthLoginComponentsTenantSelectorIndexImport.update({
+    id: '/login/_components/TenantSelector/',
+    path: '/login/TenantSelector/',
+    getParentRoute: () => AuthRoute,
+  } as any)
+
+const AuthLoginComponentsLoginFormIndexRoute =
+  AuthLoginComponentsLoginFormIndexImport.update({
+    id: '/login/_components/LoginForm/',
+    path: '/login/LoginForm/',
+    getParentRoute: () => AuthRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -114,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/modules/': {
+      id: '/_authenticated/modules/'
+      path: '/modules'
+      fullPath: '/modules'
+      preLoaderRoute: typeof AuthenticatedModulesIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_public/about/': {
       id: '/_public/about/'
       path: '/about'
@@ -128,6 +165,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicContactIndexImport
       parentRoute: typeof PublicImport
     }
+    '/_public/test/': {
+      id: '/_public/test/'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof PublicTestIndexImport
+      parentRoute: typeof PublicImport
+    }
+    '/_auth/login/_components/LoginForm/': {
+      id: '/_auth/login/_components/LoginForm/'
+      path: '/login/LoginForm'
+      fullPath: '/login/LoginForm'
+      preLoaderRoute: typeof AuthLoginComponentsLoginFormIndexImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/login/_components/TenantSelector/': {
+      id: '/_auth/login/_components/TenantSelector/'
+      path: '/login/TenantSelector'
+      fullPath: '/login/TenantSelector'
+      preLoaderRoute: typeof AuthLoginComponentsTenantSelectorIndexImport
+      parentRoute: typeof AuthImport
+    }
   }
 }
 
@@ -136,21 +194,29 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
+  AuthLoginComponentsLoginFormIndexRoute: typeof AuthLoginComponentsLoginFormIndexRoute
+  AuthLoginComponentsTenantSelectorIndexRoute: typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthRegisterIndexRoute: AuthRegisterIndexRoute,
+  AuthLoginComponentsLoginFormIndexRoute:
+    AuthLoginComponentsLoginFormIndexRoute,
+  AuthLoginComponentsTenantSelectorIndexRoute:
+    AuthLoginComponentsTenantSelectorIndexRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedModulesIndexRoute: typeof AuthenticatedModulesIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedModulesIndexRoute: AuthenticatedModulesIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -160,11 +226,13 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 interface PublicRouteChildren {
   PublicAboutIndexRoute: typeof PublicAboutIndexRoute
   PublicContactIndexRoute: typeof PublicContactIndexRoute
+  PublicTestIndexRoute: typeof PublicTestIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutIndexRoute: PublicAboutIndexRoute,
   PublicContactIndexRoute: PublicContactIndexRoute,
+  PublicTestIndexRoute: PublicTestIndexRoute,
 }
 
 const PublicRouteWithChildren =
@@ -175,8 +243,12 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginIndexRoute
   '/register': typeof AuthRegisterIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
   '/contact': typeof PublicContactIndexRoute
+  '/test': typeof PublicTestIndexRoute
+  '/login/LoginForm': typeof AuthLoginComponentsLoginFormIndexRoute
+  '/login/TenantSelector': typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -184,8 +256,12 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginIndexRoute
   '/register': typeof AuthRegisterIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
   '/contact': typeof PublicContactIndexRoute
+  '/test': typeof PublicTestIndexRoute
+  '/login/LoginForm': typeof AuthLoginComponentsLoginFormIndexRoute
+  '/login/TenantSelector': typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 export interface FileRoutesById {
@@ -196,15 +272,39 @@ export interface FileRoutesById {
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_auth/register/': typeof AuthRegisterIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/modules/': typeof AuthenticatedModulesIndexRoute
   '/_public/about/': typeof PublicAboutIndexRoute
   '/_public/contact/': typeof PublicContactIndexRoute
+  '/_public/test/': typeof PublicTestIndexRoute
+  '/_auth/login/_components/LoginForm/': typeof AuthLoginComponentsLoginFormIndexRoute
+  '/_auth/login/_components/TenantSelector/': typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/register' | '/dashboard' | '/about' | '/contact'
+  fullPaths:
+    | ''
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/modules'
+    | '/about'
+    | '/contact'
+    | '/test'
+    | '/login/LoginForm'
+    | '/login/TenantSelector'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/login' | '/register' | '/dashboard' | '/about' | '/contact'
+  to:
+    | ''
+    | '/login'
+    | '/register'
+    | '/dashboard'
+    | '/modules'
+    | '/about'
+    | '/contact'
+    | '/test'
+    | '/login/LoginForm'
+    | '/login/TenantSelector'
   id:
     | '__root__'
     | '/_auth'
@@ -213,8 +313,12 @@ export interface FileRouteTypes {
     | '/_auth/login/'
     | '/_auth/register/'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/modules/'
     | '/_public/about/'
     | '/_public/contact/'
+    | '/_public/test/'
+    | '/_auth/login/_components/LoginForm/'
+    | '/_auth/login/_components/TenantSelector/'
   fileRoutesById: FileRoutesById
 }
 
@@ -249,20 +353,24 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login/",
-        "/_auth/register/"
+        "/_auth/register/",
+        "/_auth/login/_components/LoginForm/",
+        "/_auth/login/_components/TenantSelector/"
       ]
     },
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/dashboard/"
+        "/_authenticated/dashboard/",
+        "/_authenticated/modules/"
       ]
     },
     "/_public": {
       "filePath": "_public.tsx",
       "children": [
         "/_public/about/",
-        "/_public/contact/"
+        "/_public/contact/",
+        "/_public/test/"
       ]
     },
     "/_auth/login/": {
@@ -277,6 +385,10 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/dashboard/index.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/modules/": {
+      "filePath": "_authenticated/modules/index.tsx",
+      "parent": "/_authenticated"
+    },
     "/_public/about/": {
       "filePath": "_public/about/index.tsx",
       "parent": "/_public"
@@ -284,6 +396,18 @@ export const routeTree = rootRoute
     "/_public/contact/": {
       "filePath": "_public/contact/index.tsx",
       "parent": "/_public"
+    },
+    "/_public/test/": {
+      "filePath": "_public/test/index.tsx",
+      "parent": "/_public"
+    },
+    "/_auth/login/_components/LoginForm/": {
+      "filePath": "_auth/login/_components/LoginForm/index.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/login/_components/TenantSelector/": {
+      "filePath": "_auth/login/_components/TenantSelector/index.tsx",
+      "parent": "/_auth"
     }
   }
 }
