@@ -9,7 +9,6 @@ import { JSX, forwardRef } from "react";
 export const Route = createFileRoute("/_authenticated/modules/")({
   component: RouteComponent,
 });
-
 const modules = linkOptions([
   { label: "Accounting", to: "/modules/accounting" },
   { label: "HR", to: "/modules" },

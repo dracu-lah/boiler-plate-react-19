@@ -5,6 +5,7 @@ export const Route = createFileRoute("/_authenticated/modules/accounting/")({
   component: RouteComponent,
 });
 
+export const hello = "hsadf";
 function RouteComponent() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
