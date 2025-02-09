@@ -20,7 +20,7 @@ export const Header = () => {
           onClick={() => router.navigate({ to: "/" })}
           className="text-2xl font-bold text-gray-900 cursor-pointer hover:text-blue-600 transition-colors dark:text-gray-100 dark:hover:text-blue-400"
         >
-          My App
+          ProductERP
         </h1>
 
         {token && (
