@@ -50,7 +50,7 @@ export const Sidebar = () => {
               <Link
                 key={item.to}
                 to={item.to}
-                className="flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-50 hover:bg-gray-100 rounded-lg transition-colors mb-2 dark:text-gray-300 dark:hover:bg-gray-800"
+                className="flex items-center gap-3 px-3 py-2 text-gray-700 dark:text-gray-50 hover:bg-gray-100 rounded-lg transition-colors mb-2  dark:hover:bg-gray-800"
                 activeProps={{
                   className:
                     "bg-blue-50 text-blue-600 font-medium dark:bg-blue-900 dark:text-blue-300",
