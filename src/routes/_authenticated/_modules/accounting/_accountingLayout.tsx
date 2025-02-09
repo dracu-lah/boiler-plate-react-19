@@ -11,9 +11,9 @@ function RouteComponent() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <main className="flex-grow p-6">
+        <Sidebar />
         <Outlet />
       </main>
-      <Sidebar />
     </div>
   );
 }
