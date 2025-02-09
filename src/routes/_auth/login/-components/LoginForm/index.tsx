@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "@tanstack/react-router";
 
 interface LoginFormProps {
   tenant: string;
@@ -7,6 +8,7 @@ interface LoginFormProps {
 
 export default function LoginForm({ tenant, onChangeTenant }: LoginFormProps) {
   const { setToken } = useAuth();
+  const navigate = useNavigate();
   const handleLogin = () => {
     const loginData = {
       accessToken: "your-access-token",
@@ -18,7 +20,7 @@ export default function LoginForm({ tenant, onChangeTenant }: LoginFormProps) {
       },
     };
     setToken({ data: loginData });
-    window.location.href = "/dashboard"; // Navigate to dashboard
+    navigate({ to: "/modules" });
   };
 
   return (
