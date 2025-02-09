@@ -31,6 +31,9 @@ export const Sidebar = () => {
   return (
     <div style={sidebarStyles.sidebar}>
       <nav>
+        <header>
+          <b>Accounting Module</b>
+        </header>
         <ul style={sidebarStyles.nav}>
           {!token && (
             <li style={sidebarStyles.navItem}>
@@ -49,17 +52,7 @@ export const Sidebar = () => {
               style={sidebarStyles.link}
               activeProps={{ style: sidebarStyles.activeLink }}
             >
-              Dashboard
-            </Link>
-          </li>
-
-          <li style={sidebarStyles.navItem}>
-            <Link
-              to="/about"
-              style={sidebarStyles.link}
-              activeProps={{ style: sidebarStyles.activeLink }}
-            >
-              About
+              General Ledger
             </Link>
           </li>
         </ul>
