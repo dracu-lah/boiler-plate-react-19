@@ -1,40 +1,67 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { JSX } from "react";
+import {
+  useRouter,
+  createLink,
+  LinkComponent,
+  createFileRoute,
+} from "@tanstack/react-router";
+import { JSX, forwardRef } from "react";
 
 export const Route = createFileRoute("/_authenticated/modules/")({
   component: RouteComponent,
 });
 
-function RouteComponent(): JSX.Element {
-  // Define a type for modules
-  interface Module {
-    name: string;
-    path: string;
-  }
+interface Module {
+  name: string;
+  path: string;
+}
 
-  const modules: Module[] = [
-    { name: "Accounting", path: "/modules/accounting" },
-    { name: "HR", path: "/_authenticated/modules/hr" },
-    { name: "Sales", path: "/_authenticated/modules/sales" },
-    { name: "Inventory", path: "/_authenticated/modules/inventory" },
-  ];
-  // const navigate = Route.useNavigate()
-  // navigate({to:'/modules/accounting'})
+const modules: Module[] = [
+  { name: "Accounting", path: "/_authenticated/modules/accounting" },
+  { name: "HR", path: "/_authenticated/modules/hr" },
+  { name: "Sales", path: "/_authenticated/modules/sales" },
+  { name: "Inventory", path: "/_authenticated/modules/inventory" },
+];
+
+const BaseLink = forwardRef<
+  HTMLAnchorElement,
+  React.AnchorHTMLAttributes<HTMLAnchorElement>
+>((props, ref) => (
+  <a
+    ref={ref}
+    {...props}
+    className="block px-4 py-2 text-blue-700 font-bold text-center bg-gray-100 rounded-md transition hover:bg-gray-200"
+  />
+));
+
+const CreatedLinkComponent = createLink(BaseLink);
+export const CustomLink: LinkComponent<typeof BaseLink> = (props) => (
+  <CreatedLinkComponent preload="intent" {...props} />
+);
+
+function RouteComponent(): JSX.Element {
+  const router = useRouter();
+
+  console.log("Available Routes:", Object.keys(router.routesByPath));
+
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Modules</h1>
       <div style={styles.grid}>
-        {modules.map((module: Module) => (
-          <Link key={module.path} to={module.path} style={styles.moduleCard}>
+        {modules.map((module) => (
+          <CustomLink
+            key={module.path}
+            to={module.path}
+            style={styles.moduleCard}
+          >
             {module.name}
-          </Link>
+          </CustomLink>
         ))}
       </div>
     </div>
   );
 }
 
-// Define a type for styles
+// Define styles
 const styles: Record<string, React.CSSProperties> = {
   container: {
     padding: "24px",
@@ -51,16 +78,16 @@ const styles: Record<string, React.CSSProperties> = {
     gap: "16px",
   },
   moduleCard: {
-    padding: "20px",
+    display: "block",
+    padding: "16px",
     backgroundColor: "#f0f0f0",
     borderRadius: "8px",
     textAlign: "center",
     cursor: "pointer",
-    transition: "background 0.2s",
     textDecoration: "none",
-    color: "black",
     fontWeight: "bold",
-    display: "block",
+    color: "black",
+    transition: "background 0.2s ease-in-out",
   },
 };
 
