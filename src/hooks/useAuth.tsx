@@ -12,7 +12,7 @@ import {
 interface AuthState {
   token: string | null;
   refreshToken: string | null;
-  data: Record<string, any> | null;
+  data: Record<string, unknown> | null;
 }
 
 // Define types for the action payload
@@ -20,7 +20,7 @@ interface SetTokenPayload {
   data: {
     accessToken: string;
     refreshToken: string;
-    data: Record<string, any>;
+    data: Record<string, unknown>;
   };
 }
 

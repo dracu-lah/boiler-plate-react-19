@@ -4,7 +4,7 @@ import endPoint from "./endPoint";
 import { baseURL } from "@/constants/config";
 /************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /* AUTH START */
-export const LoginAPI = async (postData: any) => {
+export const LoginAPI = async (postData: unknown) => {
   try {
     const { data } = await Axios.post(`${baseURL + endPoint.login}`, postData);
     return data;
@@ -13,7 +13,7 @@ export const LoginAPI = async (postData: any) => {
   }
 };
 
-export const RefreshAPI = async (postData: any) => {
+export const RefreshAPI = async (postData: unknown) => {
   try {
     const { data } = await Axios.post(
       `${baseURL + endPoint.refresh}`,
