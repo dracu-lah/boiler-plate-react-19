@@ -1,9 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/_modules/accounting/")({
-  component: RouteComponent,
+  beforeLoad: () => {
+    throw redirect({ to: "/accounting/general-ledger" });
+  },
 });
-
-function RouteComponent() {
-  return <div>Hello "/_authenticated/_modules/accounting/"!</div>;
-}
