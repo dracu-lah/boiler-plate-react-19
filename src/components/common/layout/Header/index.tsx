@@ -42,11 +42,10 @@ export const Header = () => {
                 <LogOut className="h-4 w-4" />
                 Log out
               </button>
-
-              <ThemeToggle />
             </div>
           </div>
         )}
+        <ThemeToggle />
       </div>
     </header>
   );
