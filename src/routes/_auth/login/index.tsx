@@ -21,7 +21,7 @@ function RouteComponent() {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center h-[80vh]">
       {tenant ? (
         <LoginForm tenant={tenant} onChangeTenant={handleChangeTenant} />
       ) : (
