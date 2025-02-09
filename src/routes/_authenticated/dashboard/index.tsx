@@ -6,12 +6,15 @@ export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: RouteComponent,
 });
 function RouteComponent() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["todos"],
     queryFn: () => GetDashboardAPI(),
   });
   if (isLoading) {
     return "...loading";
+  }
+  if (isError) {
+    return "...error";
   }
   return (
     <div>
