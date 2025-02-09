@@ -6,14 +6,14 @@ import {
 } from "@tanstack/react-router";
 import { JSX, forwardRef } from "react";
 
-export const Route = createFileRoute("/_authenticated/modules/")({
+export const Route = createFileRoute("/_authenticated/_modules/")({
   component: RouteComponent,
 });
 const modules = linkOptions([
-  { label: "Accounting", to: "/modules/accounting" },
-  { label: "HR", to: "/modules" },
-  { label: "Sales", to: "/modules" },
-  { label: "Inventory", to: "/modules" },
+  { label: "Accounting", to: "/accounting" },
+  { label: "HR", to: "/" },
+  { label: "Sales", to: "/" },
+  { label: "Inventory", to: "/" },
 ]);
 
 const BaseLink = forwardRef<

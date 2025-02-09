@@ -45,7 +45,7 @@ export const Sidebar = () => {
           )}
           <li style={sidebarStyles.navItem}>
             <Link
-              to="/dashboard"
+              to="/accounting/general-ledger"
               style={sidebarStyles.link}
               activeProps={{ style: sidebarStyles.activeLink }}
             >

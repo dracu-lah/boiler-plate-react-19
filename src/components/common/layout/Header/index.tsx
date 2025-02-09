@@ -24,7 +24,7 @@ export const Header = () => {
       {" "}
       <h1
         style={headerStyles.title}
-        onClick={() => router.navigate({ to: "/modules" })}
+        onClick={() => router.navigate({ to: "/" })}
       >
         My App
       </h1>

@@ -20,7 +20,7 @@ export default function LoginForm({ tenant, onChangeTenant }: LoginFormProps) {
       },
     };
     setToken({ data: loginData });
-    navigate({ to: "/modules" });
+    navigate({ to: "/" });
   };
 
   return (

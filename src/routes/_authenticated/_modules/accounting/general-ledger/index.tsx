@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  "/_authenticated/modules/accounting/general-ledger/",
+  '/_authenticated/_modules/accounting/general-ledger/',
 )({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
   return (
@@ -24,7 +24,7 @@ function RouteComponent() {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
-export default RouteComponent;
+export default RouteComponent
