@@ -19,8 +19,6 @@ import { Route as AuthenticatedModulesIndexImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthRegisterIndexImport } from './routes/_auth/register/index'
 import { Route as AuthLoginIndexImport } from './routes/_auth/login/index'
-import { Route as AuthLoginComponentsTenantSelectorIndexImport } from './routes/_auth/login/_components/TenantSelector/index'
-import { Route as AuthLoginComponentsLoginFormIndexImport } from './routes/_auth/login/_components/LoginForm/index'
 
 // Create/Update Routes
 
@@ -69,20 +67,6 @@ const AuthLoginIndexRoute = AuthLoginIndexImport.update({
   path: '/login/',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthLoginComponentsTenantSelectorIndexRoute =
-  AuthLoginComponentsTenantSelectorIndexImport.update({
-    id: '/login/_components/TenantSelector/',
-    path: '/login/TenantSelector/',
-    getParentRoute: () => AuthRoute,
-  } as any)
-
-const AuthLoginComponentsLoginFormIndexRoute =
-  AuthLoginComponentsLoginFormIndexImport.update({
-    id: '/login/_components/LoginForm/',
-    path: '/login/LoginForm/',
-    getParentRoute: () => AuthRoute,
-  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -144,20 +128,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAboutIndexImport
       parentRoute: typeof PublicImport
     }
-    '/_auth/login/_components/LoginForm/': {
-      id: '/_auth/login/_components/LoginForm/'
-      path: '/login/LoginForm'
-      fullPath: '/login/LoginForm'
-      preLoaderRoute: typeof AuthLoginComponentsLoginFormIndexImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/login/_components/TenantSelector/': {
-      id: '/_auth/login/_components/TenantSelector/'
-      path: '/login/TenantSelector'
-      fullPath: '/login/TenantSelector'
-      preLoaderRoute: typeof AuthLoginComponentsTenantSelectorIndexImport
-      parentRoute: typeof AuthImport
-    }
   }
 }
 
@@ -166,17 +136,11 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
-  AuthLoginComponentsLoginFormIndexRoute: typeof AuthLoginComponentsLoginFormIndexRoute
-  AuthLoginComponentsTenantSelectorIndexRoute: typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthRegisterIndexRoute: AuthRegisterIndexRoute,
-  AuthLoginComponentsLoginFormIndexRoute:
-    AuthLoginComponentsLoginFormIndexRoute,
-  AuthLoginComponentsTenantSelectorIndexRoute:
-    AuthLoginComponentsTenantSelectorIndexRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -213,8 +177,6 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
-  '/login/LoginForm': typeof AuthLoginComponentsLoginFormIndexRoute
-  '/login/TenantSelector': typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -224,8 +186,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
-  '/login/LoginForm': typeof AuthLoginComponentsLoginFormIndexRoute
-  '/login/TenantSelector': typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 export interface FileRoutesById {
@@ -238,31 +198,13 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/modules/': typeof AuthenticatedModulesIndexRoute
   '/_public/about/': typeof PublicAboutIndexRoute
-  '/_auth/login/_components/LoginForm/': typeof AuthLoginComponentsLoginFormIndexRoute
-  '/_auth/login/_components/TenantSelector/': typeof AuthLoginComponentsTenantSelectorIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/login'
-    | '/register'
-    | '/dashboard'
-    | '/modules'
-    | '/about'
-    | '/login/LoginForm'
-    | '/login/TenantSelector'
+  fullPaths: '' | '/login' | '/register' | '/dashboard' | '/modules' | '/about'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | ''
-    | '/login'
-    | '/register'
-    | '/dashboard'
-    | '/modules'
-    | '/about'
-    | '/login/LoginForm'
-    | '/login/TenantSelector'
+  to: '' | '/login' | '/register' | '/dashboard' | '/modules' | '/about'
   id:
     | '__root__'
     | '/_auth'
@@ -273,8 +215,6 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/'
     | '/_authenticated/modules/'
     | '/_public/about/'
-    | '/_auth/login/_components/LoginForm/'
-    | '/_auth/login/_components/TenantSelector/'
   fileRoutesById: FileRoutesById
 }
 
@@ -309,9 +249,7 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/login/",
-        "/_auth/register/",
-        "/_auth/login/_components/LoginForm/",
-        "/_auth/login/_components/TenantSelector/"
+        "/_auth/register/"
       ]
     },
     "/_authenticated": {
@@ -346,14 +284,6 @@ export const routeTree = rootRoute
     "/_public/about/": {
       "filePath": "_public/about/index.tsx",
       "parent": "/_public"
-    },
-    "/_auth/login/_components/LoginForm/": {
-      "filePath": "_auth/login/_components/LoginForm/index.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/login/_components/TenantSelector/": {
-      "filePath": "_auth/login/_components/TenantSelector/index.tsx",
-      "parent": "/_auth"
     }
   }
 }
