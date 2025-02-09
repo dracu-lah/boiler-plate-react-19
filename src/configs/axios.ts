@@ -1,4 +1,5 @@
 import { BASE_URL } from "@/constants/config";
+import endPoint from "@/services/api/endPoint";
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -24,7 +25,7 @@ const RefreshTokenAPI = async (tokens: {
   refreshToken: string;
   accessToken: string;
 }) => {
-  return api.post<{ accessToken: string }>("/auth/refresh", tokens);
+  return api.post<{ accessToken: string }>(endPoint.auth.refreshToken, tokens);
 };
 
 /**
