@@ -1,64 +1,70 @@
+// Sidebar Component
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "@tanstack/react-router";
-
-const sidebarStyles = {
-  sidebar: {
-    width: "200px",
-    padding: "1rem",
-    backgroundColor: "#f8f9fa",
-    borderRight: "1px solid #dee2e6",
-    left: 0,
-  },
-  nav: {
-    listStyle: "none",
-    padding: 0,
-    margin: 0,
-  },
-  navItem: {
-    marginBottom: "0.5rem",
-  },
-  link: {
-    textDecoration: "none",
-    color: "#212529",
-  },
-  activeLink: {
-    fontWeight: "bold",
-  },
-};
+import { BookOpen, LayoutDashboard, FileText, LogIn } from "lucide-react";
 
 export const Sidebar = () => {
   const { token } = useAuth();
+
+  const navigationItems = [
+    {
+      to: "/accounting/general-ledger",
+      label: "General Ledger",
+      icon: FileText,
+    },
+    // Add more navigation items as needed
+  ];
+
   return (
-    <div style={sidebarStyles.sidebar}>
-      <nav>
-        <header>
-          <Link to="/accounting">
-            <b>Accounting Module</b>
-          </Link>
-        </header>
-        <ul style={sidebarStyles.nav}>
+    <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col">
+      {/* Header */}
+      <div className="p-6 border-b border-gray-200">
+        <Link
+          to="/accounting"
+          className="flex items-center gap-3 text-gray-900 hover:text-blue-600 transition-colors"
+        >
+          <BookOpen className="h-6 w-6" />
+          <span className="font-semibold text-lg">Accounting Module</span>
+        </Link>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 py-4">
+        <div className="px-3">
           {!token && (
-            <li style={sidebarStyles.navItem}>
-              <Link
-                to="/login"
-                style={sidebarStyles.link}
-                activeProps={{ style: sidebarStyles.activeLink }}
-              >
-                Login
-              </Link>
-            </li>
-          )}
-          <li style={sidebarStyles.navItem}>
             <Link
-              to="/accounting/general-ledger"
-              style={sidebarStyles.link}
-              activeProps={{ style: sidebarStyles.activeLink }}
+              to="/login"
+              className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors mb-2"
+              activeProps={{ className: "bg-blue-50 text-blue-600" }}
             >
-              General Ledger
+              <LogIn className="h-5 w-5" />
+              <span>Login</span>
             </Link>
-          </li>
-        </ul>
+          )}
+
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors mb-2"
+                activeProps={{
+                  className: "bg-blue-50 text-blue-600 font-medium",
+                }}
+              >
+                <Icon className="h-5 w-5" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
+
+      {/* Footer - Optional */}
+      <div className="p-4 border-t border-gray-200">
+        <div className="text-xs text-gray-500">Accounting System v1.0</div>
+      </div>
     </div>
   );
 };
