@@ -5,20 +5,21 @@ export const Route = createFileRoute("/_authenticated/modules/")({
   component: RouteComponent,
 });
 
-// Define a type for modules
-interface Module {
-  name: string;
-  path: string;
-}
-
-const modules: Module[] = [
-  { name: "Accounting", path: "/_authenticated/modules/accounting" },
-  { name: "HR", path: "/_authenticated/modules/hr" },
-  { name: "Sales", path: "/_authenticated/modules/sales" },
-  { name: "Inventory", path: "/_authenticated/modules/inventory" },
-];
-
 function RouteComponent(): JSX.Element {
+  // Define a type for modules
+  interface Module {
+    name: string;
+    path: string;
+  }
+
+  const modules: Module[] = [
+    { name: "Accounting", path: "/modules/accounting" },
+    { name: "HR", path: "/_authenticated/modules/hr" },
+    { name: "Sales", path: "/_authenticated/modules/sales" },
+    { name: "Inventory", path: "/_authenticated/modules/inventory" },
+  ];
+  // const navigate = Route.useNavigate()
+  // navigate({to:'/modules/accounting'})
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Modules</h1>
