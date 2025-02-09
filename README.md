@@ -48,3 +48,4 @@ export default tseslint.config({
   },
 })
 ```
+# boiler-plate-react-19
