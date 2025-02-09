@@ -44,8 +44,13 @@ const ACTIONS = {
   clearToken: "clearToken",
 } as const;
 
+const setTenantHeader = () => {
+  const tenant = localStorage.getItem("tenant");
+  axios.defaults.headers.common["X-Tenant"] = tenant;
+};
 // Helper function to set axios authorization header
 const setAxiosAuthHeader = (token: string | null) => {
+  setTenantHeader();
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {

@@ -1,36 +1,32 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import LoginForm from "./_components/LoginForm";
+import TenantSelector from "./_components/TenantSelector";
 
 export const Route = createFileRoute("/_auth/login/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { setToken } = useAuth();
-  const navigate = Route.useNavigate();
+  const [tenant, setTenant] = useState<string | null>(null);
+
+  useEffect(() => {
+    setTenant(localStorage.getItem("tenant"));
+  }, []);
+
+  const handleTenantSelect = (newTenant: string) => setTenant(newTenant);
+  const handleChangeTenant = () => {
+    localStorage.removeItem("tenant");
+    setTenant(null);
+  };
+
   return (
-    <div>
-      Hello "/auth/login"!
-      <br />
-      <button
-        onClick={() => {
-          const loginData = {
-            accessToken: "your-access-token",
-            refreshToken: "your-refresh-token",
-            data: {
-              roleName: "admin",
-              userId: "123",
-              permissions: ["read", "write"],
-            },
-          };
-          setToken({
-            data: loginData,
-          });
-          navigate({ to: "/dashboard" });
-        }}
-      >
-        Login Cheyada
-      </button>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      {tenant ? (
+        <LoginForm tenant={tenant} onChangeTenant={handleChangeTenant} />
+      ) : (
+        <TenantSelector onTenantSelect={handleTenantSelect} />
+      )}
     </div>
   );
 }
