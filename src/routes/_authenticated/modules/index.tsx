@@ -3,6 +3,7 @@ import {
   createLink,
   LinkComponent,
   createFileRoute,
+  linkOptions,
 } from "@tanstack/react-router";
 import { JSX, forwardRef } from "react";
 
@@ -10,17 +11,12 @@ export const Route = createFileRoute("/_authenticated/modules/")({
   component: RouteComponent,
 });
 
-interface Module {
-  name: string;
-  path: string;
-}
-
-const modules: Module[] = [
-  { name: "Accounting", path: "/_authenticated/modules/accounting" },
-  { name: "HR", path: "/_authenticated/modules/hr" },
-  { name: "Sales", path: "/_authenticated/modules/sales" },
-  { name: "Inventory", path: "/_authenticated/modules/inventory" },
-];
+const modules = linkOptions([
+  { label: "Accounting", to: "/modules/accounting" },
+  { label: "HR", to: "/modules" },
+  { label: "Sales", to: "/modules" },
+  { label: "Inventory", to: "/modules" },
+]);
 
 const BaseLink = forwardRef<
   HTMLAnchorElement,
@@ -39,21 +35,13 @@ export const CustomLink: LinkComponent<typeof BaseLink> = (props) => (
 );
 
 function RouteComponent(): JSX.Element {
-  const router = useRouter();
-
-  console.log("Available Routes:", Object.keys(router.routesByPath));
-
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Modules</h1>
       <div style={styles.grid}>
         {modules.map((module) => (
-          <CustomLink
-            key={module.path}
-            to={module.path}
-            style={styles.moduleCard}
-          >
-            {module.name}
+          <CustomLink key={module.to} to={module.to} style={styles.moduleCard}>
+            {module.label}
           </CustomLink>
         ))}
       </div>
