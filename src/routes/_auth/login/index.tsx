@@ -20,13 +20,9 @@ function RouteComponent() {
     setTenant(null);
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      {tenant ? (
-        <LoginForm tenant={tenant} onChangeTenant={handleChangeTenant} />
-      ) : (
-        <TenantSelector onTenantSelect={handleTenantSelect} />
-      )}
-    </div>
-  );
+  if (tenant) {
+    return <LoginForm tenant={tenant} onChangeTenant={handleChangeTenant} />;
+  } else {
+    return <TenantSelector onTenantSelect={handleTenantSelect} />;
+  }
 }

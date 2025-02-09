@@ -24,7 +24,7 @@ export default function LoginForm({ tenant, onChangeTenant }: LoginFormProps) {
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center bg-black w-full h-full">
       <h2 className="text-xl font-semibold mb-4">Tenant: {tenant}</h2>
       <button
         onClick={handleLogin}
