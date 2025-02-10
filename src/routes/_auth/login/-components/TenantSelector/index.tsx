@@ -35,17 +35,19 @@ export default function TenantSelector({
   };
 
   return (
-    <div className="h-full w-full flex items-center justify-center ">
+    <div className="h-full w-full flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
-            <Building2 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+          <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <Building2 className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Select Your Tenant</CardTitle>
+          <CardTitle className="text-2xl text-foreground">
+            Select Your Tenant
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <Select value={selectedTenant} onValueChange={setSelectedTenant}>
-            <SelectTrigger>
+            <SelectTrigger className="bg-background border-input">
               <SelectValue placeholder="Choose a tenant" />
             </SelectTrigger>
             <SelectContent>
@@ -56,11 +58,10 @@ export default function TenantSelector({
               ))}
             </SelectContent>
           </Select>
-
           <Button
             onClick={handleTenantSubmit}
             disabled={!selectedTenant}
-            className="w-full"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
           >
             Continue
           </Button>
