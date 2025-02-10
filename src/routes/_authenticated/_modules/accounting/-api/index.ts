@@ -1,5 +1,4 @@
 import { axios } from "@/configs/axios";
-import endpoints from "./endpoints";
 const ledger = {
   get: async (params = {}) => {
     const { data } = await axios.get(`https://dummyjson.com/products`, {
