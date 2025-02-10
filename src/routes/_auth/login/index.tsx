@@ -21,12 +21,12 @@ function RouteComponent() {
   };
 
   return (
-    <>
+    <div className="min-h-[80vh] w-full flex items-center justify-center ">
       {tenant ? (
         <LoginForm tenant={tenant} onChangeTenant={handleChangeTenant} />
       ) : (
         <TenantSelector onTenantSelect={handleTenantSelect} />
       )}
-    </>
+    </div>
   );
 }

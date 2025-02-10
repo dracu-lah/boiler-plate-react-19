@@ -35,7 +35,7 @@ export default function TenantSelector({
   };
 
   return (
-    <div className="h-full w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="h-full w-full flex items-center justify-center ">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
