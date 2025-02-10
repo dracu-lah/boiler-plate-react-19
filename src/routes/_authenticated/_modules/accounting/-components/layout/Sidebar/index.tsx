@@ -15,7 +15,7 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col dark:bg-gray-900 dark:border-gray-700">
+    <div className="w-64 h-full  bg-white border-r border-gray-200 flex flex-col dark:bg-gray-900 dark:border-gray-700">
       {/* Header */}
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <Link
