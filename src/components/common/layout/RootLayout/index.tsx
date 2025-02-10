@@ -8,7 +8,7 @@ interface RootLayoutProps {
 }
 
 const RootLayout = ({ children }: RootLayoutProps) => (
-  <div className="flex min-h-screen flex-col justify-between font-sans bg-background">
+  <div className="flex min-h-screen flex-col justify-between font-sans ">
     <Header />
     <main className="flex-1">{children}</main>
     <Footer />
