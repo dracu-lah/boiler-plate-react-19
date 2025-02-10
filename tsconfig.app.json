@@ -26,6 +26,5 @@
       "@/modules/*": ["./src/routes/_authenticated/modules/*"],
       "@/*": ["./src/*"]
     }
-  },
-  "include": ["src"]
+  }
 }
