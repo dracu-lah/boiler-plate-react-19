@@ -21,8 +21,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
     "paths": {
-      "baseUrl": ".",
       "@/modules/*": ["./src/routes/_authenticated/modules/*"],
       "@/*": ["./src/*"]
     }
