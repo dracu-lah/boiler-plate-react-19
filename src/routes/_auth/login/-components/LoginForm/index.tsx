@@ -34,7 +34,7 @@ export default function LoginForm({ tenant, onChangeTenant }: LoginFormProps) {
       };
       await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate API call
       setToken({ data: loginData });
-      navigate({ to: "/" });
+      navigate({ to: "/modules" });
     } finally {
       setIsLoading(false);
     }

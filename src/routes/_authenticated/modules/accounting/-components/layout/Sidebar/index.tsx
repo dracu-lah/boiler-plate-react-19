@@ -19,7 +19,7 @@ export const Sidebar = () => {
       {/* Header */}
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <Link
-          to="/accounting"
+          to="/modules/accounting"
           className="flex items-center gap-3 text-gray-900 hover:text-blue-600 transition-colors dark:text-gray-100 dark:hover:text-blue-400"
         >
           <BookOpen className="h-6 w-6" />

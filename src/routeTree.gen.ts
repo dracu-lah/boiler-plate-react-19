@@ -17,18 +17,18 @@ import { Route as PublicImport } from './routes/_public'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as PublicAboutIndexImport } from './routes/_public/about/index'
+import { Route as AuthenticatedModulesIndexImport } from './routes/_authenticated/modules/index'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
-import { Route as AuthenticatedModulesIndexImport } from './routes/_authenticated/_modules/index'
 import { Route as AuthRegisterIndexImport } from './routes/_auth/register/index'
 import { Route as AuthLoginIndexImport } from './routes/_auth/login/index'
-import { Route as AuthenticatedModulesAccountingIndexImport } from './routes/_authenticated/_modules/accounting/index'
-import { Route as AuthenticatedModulesAccountingAccountingLayoutImport } from './routes/_authenticated/_modules/accounting/_accountingLayout'
-import { Route as AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexImport } from './routes/_authenticated/_modules/accounting/_accountingLayout/general-ledger/index'
+import { Route as AuthenticatedModulesAccountingIndexImport } from './routes/_authenticated/modules/accounting/index'
+import { Route as AuthenticatedModulesAccountingAccountingLayoutImport } from './routes/_authenticated/modules/accounting/_accountingLayout'
+import { Route as AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexImport } from './routes/_authenticated/modules/accounting/_accountingLayout/general-ledger/index'
 
 // Create Virtual Routes
 
 const AuthenticatedModulesAccountingImport = createFileRoute(
-  '/_authenticated/_modules/accounting',
+  '/_authenticated/modules/accounting',
 )()
 
 // Create/Update Routes
@@ -50,8 +50,8 @@ const AuthRoute = AuthImport.update({
 
 const AuthenticatedModulesAccountingRoute =
   AuthenticatedModulesAccountingImport.update({
-    id: '/_modules/accounting',
-    path: '/accounting',
+    id: '/modules/accounting',
+    path: '/modules/accounting',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -61,18 +61,18 @@ const PublicAboutIndexRoute = PublicAboutIndexImport.update({
   getParentRoute: () => PublicRoute,
 } as any)
 
+const AuthenticatedModulesIndexRoute = AuthenticatedModulesIndexImport.update({
+  id: '/modules/',
+  path: '/modules/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexImport.update({
     id: '/dashboard/',
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-
-const AuthenticatedModulesIndexRoute = AuthenticatedModulesIndexImport.update({
-  id: '/_modules/',
-  path: '/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
 
 const AuthRegisterIndexRoute = AuthRegisterIndexImport.update({
   id: '/register/',
@@ -147,18 +147,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRegisterIndexImport
       parentRoute: typeof AuthImport
     }
-    '/_authenticated/_modules/': {
-      id: '/_authenticated/_modules/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedModulesIndexImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/modules/': {
+      id: '/_authenticated/modules/'
+      path: '/modules'
+      fullPath: '/modules'
+      preLoaderRoute: typeof AuthenticatedModulesIndexImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_public/about/': {
@@ -168,31 +168,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAboutIndexImport
       parentRoute: typeof PublicImport
     }
-    '/_authenticated/_modules/accounting': {
-      id: '/_authenticated/_modules/accounting'
-      path: '/accounting'
-      fullPath: '/accounting'
+    '/_authenticated/modules/accounting': {
+      id: '/_authenticated/modules/accounting'
+      path: '/modules/accounting'
+      fullPath: '/modules/accounting'
       preLoaderRoute: typeof AuthenticatedModulesAccountingImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/_modules/accounting/_accountingLayout': {
-      id: '/_authenticated/_modules/accounting/_accountingLayout'
-      path: '/accounting'
-      fullPath: '/accounting'
+    '/_authenticated/modules/accounting/_accountingLayout': {
+      id: '/_authenticated/modules/accounting/_accountingLayout'
+      path: '/modules/accounting'
+      fullPath: '/modules/accounting'
       preLoaderRoute: typeof AuthenticatedModulesAccountingAccountingLayoutImport
       parentRoute: typeof AuthenticatedModulesAccountingRoute
     }
-    '/_authenticated/_modules/accounting/': {
-      id: '/_authenticated/_modules/accounting/'
+    '/_authenticated/modules/accounting/': {
+      id: '/_authenticated/modules/accounting/'
       path: '/'
-      fullPath: '/accounting/'
+      fullPath: '/modules/accounting/'
       preLoaderRoute: typeof AuthenticatedModulesAccountingIndexImport
       parentRoute: typeof AuthenticatedModulesAccountingImport
     }
-    '/_authenticated/_modules/accounting/_accountingLayout/general-ledger/': {
-      id: '/_authenticated/_modules/accounting/_accountingLayout/general-ledger/'
+    '/_authenticated/modules/accounting/_accountingLayout/general-ledger/': {
+      id: '/_authenticated/modules/accounting/_accountingLayout/general-ledger/'
       path: '/general-ledger'
-      fullPath: '/accounting/general-ledger'
+      fullPath: '/modules/accounting/general-ledger'
       preLoaderRoute: typeof AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexImport
       parentRoute: typeof AuthenticatedModulesAccountingAccountingLayoutImport
     }
@@ -247,14 +247,14 @@ const AuthenticatedModulesAccountingRouteWithChildren =
   )
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedModulesIndexRoute: typeof AuthenticatedModulesIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedModulesIndexRoute: typeof AuthenticatedModulesIndexRoute
   AuthenticatedModulesAccountingRoute: typeof AuthenticatedModulesAccountingRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedModulesIndexRoute: AuthenticatedModulesIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedModulesIndexRoute: AuthenticatedModulesIndexRoute,
   AuthenticatedModulesAccountingRoute:
     AuthenticatedModulesAccountingRouteWithChildren,
 }
@@ -278,23 +278,23 @@ export interface FileRoutesByFullPath {
   '': typeof PublicRouteWithChildren
   '/login': typeof AuthLoginIndexRoute
   '/register': typeof AuthRegisterIndexRoute
-  '/': typeof AuthenticatedModulesIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
-  '/accounting': typeof AuthenticatedModulesAccountingAccountingLayoutRouteWithChildren
-  '/accounting/': typeof AuthenticatedModulesAccountingIndexRoute
-  '/accounting/general-ledger': typeof AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexRoute
+  '/modules/accounting': typeof AuthenticatedModulesAccountingAccountingLayoutRouteWithChildren
+  '/modules/accounting/': typeof AuthenticatedModulesAccountingIndexRoute
+  '/modules/accounting/general-ledger': typeof AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexRoute
 }
 
 export interface FileRoutesByTo {
   '': typeof PublicRouteWithChildren
   '/login': typeof AuthLoginIndexRoute
   '/register': typeof AuthRegisterIndexRoute
-  '/': typeof AuthenticatedModulesIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
-  '/accounting': typeof AuthenticatedModulesAccountingIndexRoute
-  '/accounting/general-ledger': typeof AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexRoute
+  '/modules/accounting': typeof AuthenticatedModulesAccountingIndexRoute
+  '/modules/accounting/general-ledger': typeof AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexRoute
 }
 
 export interface FileRoutesById {
@@ -304,13 +304,13 @@ export interface FileRoutesById {
   '/_public': typeof PublicRouteWithChildren
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_auth/register/': typeof AuthRegisterIndexRoute
-  '/_authenticated/_modules/': typeof AuthenticatedModulesIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/modules/': typeof AuthenticatedModulesIndexRoute
   '/_public/about/': typeof PublicAboutIndexRoute
-  '/_authenticated/_modules/accounting': typeof AuthenticatedModulesAccountingRouteWithChildren
-  '/_authenticated/_modules/accounting/_accountingLayout': typeof AuthenticatedModulesAccountingAccountingLayoutRouteWithChildren
-  '/_authenticated/_modules/accounting/': typeof AuthenticatedModulesAccountingIndexRoute
-  '/_authenticated/_modules/accounting/_accountingLayout/general-ledger/': typeof AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexRoute
+  '/_authenticated/modules/accounting': typeof AuthenticatedModulesAccountingRouteWithChildren
+  '/_authenticated/modules/accounting/_accountingLayout': typeof AuthenticatedModulesAccountingAccountingLayoutRouteWithChildren
+  '/_authenticated/modules/accounting/': typeof AuthenticatedModulesAccountingIndexRoute
+  '/_authenticated/modules/accounting/_accountingLayout/general-ledger/': typeof AuthenticatedModulesAccountingAccountingLayoutGeneralLedgerIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -319,22 +319,22 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/register'
-    | '/'
     | '/dashboard'
+    | '/modules'
     | '/about'
-    | '/accounting'
-    | '/accounting/'
-    | '/accounting/general-ledger'
+    | '/modules/accounting'
+    | '/modules/accounting/'
+    | '/modules/accounting/general-ledger'
   fileRoutesByTo: FileRoutesByTo
   to:
     | ''
     | '/login'
     | '/register'
-    | '/'
     | '/dashboard'
+    | '/modules'
     | '/about'
-    | '/accounting'
-    | '/accounting/general-ledger'
+    | '/modules/accounting'
+    | '/modules/accounting/general-ledger'
   id:
     | '__root__'
     | '/_auth'
@@ -342,13 +342,13 @@ export interface FileRouteTypes {
     | '/_public'
     | '/_auth/login/'
     | '/_auth/register/'
-    | '/_authenticated/_modules/'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/modules/'
     | '/_public/about/'
-    | '/_authenticated/_modules/accounting'
-    | '/_authenticated/_modules/accounting/_accountingLayout'
-    | '/_authenticated/_modules/accounting/'
-    | '/_authenticated/_modules/accounting/_accountingLayout/general-ledger/'
+    | '/_authenticated/modules/accounting'
+    | '/_authenticated/modules/accounting/_accountingLayout'
+    | '/_authenticated/modules/accounting/'
+    | '/_authenticated/modules/accounting/_accountingLayout/general-ledger/'
   fileRoutesById: FileRoutesById
 }
 
@@ -389,9 +389,9 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/_modules/",
         "/_authenticated/dashboard/",
-        "/_authenticated/_modules/accounting"
+        "/_authenticated/modules/",
+        "/_authenticated/modules/accounting"
       ]
     },
     "/_public": {
@@ -408,40 +408,40 @@ export const routeTree = rootRoute
       "filePath": "_auth/register/index.tsx",
       "parent": "/_auth"
     },
-    "/_authenticated/_modules/": {
-      "filePath": "_authenticated/_modules/index.tsx",
-      "parent": "/_authenticated"
-    },
     "/_authenticated/dashboard/": {
       "filePath": "_authenticated/dashboard/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/modules/": {
+      "filePath": "_authenticated/modules/index.tsx",
       "parent": "/_authenticated"
     },
     "/_public/about/": {
       "filePath": "_public/about/index.tsx",
       "parent": "/_public"
     },
-    "/_authenticated/_modules/accounting": {
-      "filePath": "_authenticated/_modules/accounting",
+    "/_authenticated/modules/accounting": {
+      "filePath": "_authenticated/modules/accounting",
       "parent": "/_authenticated",
       "children": [
-        "/_authenticated/_modules/accounting/_accountingLayout",
-        "/_authenticated/_modules/accounting/"
+        "/_authenticated/modules/accounting/_accountingLayout",
+        "/_authenticated/modules/accounting/"
       ]
     },
-    "/_authenticated/_modules/accounting/_accountingLayout": {
-      "filePath": "_authenticated/_modules/accounting/_accountingLayout.tsx",
-      "parent": "/_authenticated/_modules/accounting",
+    "/_authenticated/modules/accounting/_accountingLayout": {
+      "filePath": "_authenticated/modules/accounting/_accountingLayout.tsx",
+      "parent": "/_authenticated/modules/accounting",
       "children": [
-        "/_authenticated/_modules/accounting/_accountingLayout/general-ledger/"
+        "/_authenticated/modules/accounting/_accountingLayout/general-ledger/"
       ]
     },
-    "/_authenticated/_modules/accounting/": {
-      "filePath": "_authenticated/_modules/accounting/index.tsx",
-      "parent": "/_authenticated/_modules/accounting"
+    "/_authenticated/modules/accounting/": {
+      "filePath": "_authenticated/modules/accounting/index.tsx",
+      "parent": "/_authenticated/modules/accounting"
     },
-    "/_authenticated/_modules/accounting/_accountingLayout/general-ledger/": {
-      "filePath": "_authenticated/_modules/accounting/_accountingLayout/general-ledger/index.tsx",
-      "parent": "/_authenticated/_modules/accounting/_accountingLayout"
+    "/_authenticated/modules/accounting/_accountingLayout/general-ledger/": {
+      "filePath": "_authenticated/modules/accounting/_accountingLayout/general-ledger/index.tsx",
+      "parent": "/_authenticated/modules/accounting/_accountingLayout"
     }
   }
 }

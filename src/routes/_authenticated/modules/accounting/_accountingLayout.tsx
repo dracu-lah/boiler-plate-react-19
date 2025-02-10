@@ -1,8 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Sidebar } from "./-components/layout/Sidebar";
 
 export const Route = createFileRoute(
-  "/_authenticated/_modules/accounting/_accountingLayout",
+  "/_authenticated/modules/accounting/_accountingLayout",
 )({
   component: RouteComponent,
 });

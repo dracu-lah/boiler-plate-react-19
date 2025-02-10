@@ -3,32 +3,32 @@ import { JSX } from "react";
 import { BookOpen, Users, DollarSign, Package } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/_authenticated/_modules/")({
+export const Route = createFileRoute("/_authenticated/modules/")({
   component: RouteComponent,
 });
 
 const modules = linkOptions([
   {
     label: "Accounting",
-    to: "/accounting",
+    to: "/modules/accounting",
     icon: DollarSign,
     color: "bg-gradient-to-br from-purple-500 to-indigo-600",
   },
   {
     label: "HR",
-    to: "/",
+    to: "/modules",
     icon: Users,
     color: "bg-gradient-to-br from-blue-500 to-cyan-600",
   },
   {
     label: "Sales",
-    to: "/",
+    to: "/modules",
     icon: BookOpen,
     color: "bg-gradient-to-br from-emerald-500 to-teal-600",
   },
   {
     label: "Inventory",
-    to: "/",
+    to: "/modules",
     icon: Package,
     color: "bg-gradient-to-br from-orange-500 to-amber-600",
   },
