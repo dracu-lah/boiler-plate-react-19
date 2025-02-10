@@ -8,7 +8,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   return (
-    <div className=" p-6 flex flex-col items-center bg-gray-100 dark:bg-gray-900">
+    <div className=" p-6 h-full flex flex-col items-center bg-gray-100 dark:bg-gray-900">
       <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100">
         General Ledger
       </h1>

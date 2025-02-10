@@ -7,13 +7,17 @@ export const Route = createFileRoute(
   component: RouteComponent,
 });
 
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+function ModuleLayout({ children }: RootLayoutProps) {
+  return <div className="h-full bg-black">{children}</div>;
+}
+
 function RouteComponent() {
   return (
-    <div className="flex h-full  ">
-      <Sidebar />
-      <main className="flex-1 p-8 overflow-auto">
-        <Outlet />
-      </main>
-    </div>
+    <ModuleLayout>
+      <Outlet />
+    </ModuleLayout>
   );
 }
