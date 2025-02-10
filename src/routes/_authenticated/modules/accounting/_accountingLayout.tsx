@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { Sidebar } from "./-components/layout/Sidebar";
 
 export const Route = createFileRoute(
   "/_authenticated/modules/accounting/_accountingLayout",
@@ -10,7 +11,12 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 function ModuleLayout({ children }: RootLayoutProps) {
-  return <div className="h-full bg-black">{children}</div>;
+  return (
+    <div className="h-full bg-black">
+      <Sidebar />
+      {children}
+    </div>
+  );
 }
 
 function RouteComponent() {
