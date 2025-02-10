@@ -1,7 +1,6 @@
 import { Link, createFileRoute, linkOptions } from "@tanstack/react-router";
 import { JSX } from "react";
 import { BookOpen, Users, DollarSign, Package } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/_modules/")({
