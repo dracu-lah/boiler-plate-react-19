@@ -7,7 +7,7 @@ export const Sidebar = () => {
 
   const navigationItems = [
     {
-      to: "/accounting/general-ledger",
+      to: "/modules/accounting/general-ledger",
       label: "General Ledger",
       icon: FileText,
     },
