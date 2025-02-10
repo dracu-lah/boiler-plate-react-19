@@ -1,6 +1,6 @@
 export const Footer = () => (
-  <footer className="w-full border-t-2 bg-slate-100 py-3 text-white shadow-md dark:bg-gray-900 dark:border-gray-700">
-    <p className="text-center text-sm text-black dark:text-gray-300">
+  <footer className="w-full border-t bg-muted py-3">
+    <p className="text-center text-sm text-muted-foreground">
       © Powered by Udyata Technologies.
     </p>
   </footer>
