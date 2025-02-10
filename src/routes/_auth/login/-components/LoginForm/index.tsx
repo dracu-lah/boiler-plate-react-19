@@ -35,16 +35,14 @@ export default function LoginForm({ tenant, onChangeTenant }: LoginFormProps) {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center space-y-6">
-        <div className="mx-auto h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
-          <Building2 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+        <div className="mx-auto h-12 w-12 rounded-full bg-primary dark:bg-primary flex items-center justify-center">
+          <Building2 className="h-6 w-6 text-secondary " />
         </div>
         <div className="space-y-2">
-          <h2 className="text-2xl font-bold">Welcome Back</h2>
-          <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+          <h2 className="text-2xl font-bold text-primary">Welcome Back</h2>
+          <div className="flex items-center justify-center gap-1 text-sm text-gray-600 dark:text-gray-400">
             <span>Logged into tenant:</span>
-            <span className="font-semibold text-blue-600 dark:text-blue-400">
-              {tenant}
-            </span>
+            <span className="font-semibold text-primary">{tenant}</span>
           </div>
         </div>
       </CardHeader>
