@@ -2,7 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/modules/*": ["./src/routes/_authenticated/modules/*"],
       "@/*": ["./src/*"]
     }
   },
