@@ -43,7 +43,7 @@ const SubMenuAccordion: React.FC<SubMenuAccordionProps> = ({
         value={`item-${index}`}
       >
         <AccordionTrigger className="px-4">
-          <div className="flex w-[200px] gap-x-2">
+          <div className="flex  gap-x-2 ">
             {item.icon && (
               <item.icon strokeWidth={3} className="size-5 min-w-fit" />
             )}
