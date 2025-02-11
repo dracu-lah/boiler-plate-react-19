@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  "/_authenticated/modules/accounting/_accountingLayout/general-ledger/",
+  '/_authenticated/modules/accounting/_accountingLayout/general-ledger/',
 )({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
   return (
@@ -22,9 +22,9 @@ function RouteComponent() {
         </h2>
         <ul className="space-y-3">
           {[
-            { id: 1, description: "Invoice #12345", amount: "$500" },
-            { id: 2, description: "Payment Received", amount: "$200" },
-            { id: 3, description: "Expense: Office Supplies", amount: "$50" },
+            { id: 1, description: 'Invoice #12345', amount: '$500' },
+            { id: 2, description: 'Payment Received', amount: '$200' },
+            { id: 3, description: 'Expense: Office Supplies', amount: '$50' },
           ].map((item) => (
             <li
               key={item.id}
@@ -37,7 +37,7 @@ function RouteComponent() {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
-export default RouteComponent;
+export default RouteComponent

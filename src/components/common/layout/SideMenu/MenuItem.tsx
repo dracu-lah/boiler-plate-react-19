@@ -5,9 +5,26 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import type { MenuItem, SubMenuItem } from "./types";
 
-const SubMenuAccordion = ({ item, index, isItemActive }) => {
-  if (!item.subMenu.subMenu) {
+interface SubMenuAccordionProps {
+  item: MenuItem | SubMenuItem;
+  index: number;
+  isItemActive: (item: MenuItem | SubMenuItem) => boolean;
+  subMenu?: SubMenuAccordionProps;
+}
+
+interface MenuItemProps {
+  item: MenuItem;
+  index: number;
+}
+
+const SubMenuAccordion: React.FC<SubMenuAccordionProps> = ({
+  item,
+  index,
+  isItemActive,
+}) => {
+  if (!item.subMenu?.subMenu) {
     return (
       <Accordion key={index} type="single" collapsible>
         <AccordionItem
@@ -64,21 +81,16 @@ const SubMenuAccordion = ({ item, index, isItemActive }) => {
   }
 };
 
-const MenuItem = ({ item, index }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ item, index }) => {
   const location = useLocation();
 
-  const isItemActive = (item) => {
-    const isDashboard = item.route === routePath.dashboard;
+  const isItemActive = (item: MenuItem | SubMenuItem): boolean => {
     const isCurrentRoute = location.pathname === item.route;
-    const isCurrentSubRoute = location.pathname.startsWith(item.route);
+    const isCurrentSubRoute = item.route
+      ? location.pathname.startsWith(item.route)
+      : false;
 
-    if (isDashboard && location.pathname === routePath.dashboard) {
-      return true;
-    }
-
-    return (
-      (isCurrentRoute && !isDashboard) || (isCurrentSubRoute && !isDashboard)
-    );
+    return isCurrentRoute || isCurrentSubRoute;
   };
 
   if (item.subMenu) {
@@ -89,7 +101,7 @@ const MenuItem = ({ item, index }) => {
     return (
       <Link
         key={index}
-        to={item.route}
+        to={item.route!}
         onClick={() => window.scroll(0, 0)}
         className={`flex min-w-fit gap-x-2 rounded-lg px-4 py-4 font-semibold duration-300 hover:bg-primary/60 ${
           isItemActive(item) ? "bg-primary" : ""
