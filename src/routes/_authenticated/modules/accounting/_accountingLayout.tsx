@@ -1,5 +1,5 @@
+import { Sidebar } from "@/components/common/layout/Sidebar";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Sidebar } from "./-components/layout/Sidebar";
 
 export const Route = createFileRoute(
   "/_authenticated/modules/accounting/_accountingLayout",
