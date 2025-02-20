@@ -23,7 +23,7 @@ export const Header = () => {
           className="p-0 text-2xl font-bold"
           onClick={() => router.navigate({ to: "/modules" })}
         >
-          ProductERP
+          KeyTracker
         </Button>
 
         <div className="flex items-center gap-x-10">
