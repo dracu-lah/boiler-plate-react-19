@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  '/_authenticated/modules/users/_accountingLayout/users/',
+  '/_authenticated/modules/users/_layout/roles/',
 )({
   component: RouteComponent,
 })
@@ -9,7 +9,7 @@ export const Route = createFileRoute(
 function RouteComponent() {
   return (
     <div>
-      Hello "/_authenticated/modules/accounting/_accountingLayout/users/"!
+      Hello "/_authenticated/modules/accounting/_accountingLayout/roles/"!
     </div>
   )
 }

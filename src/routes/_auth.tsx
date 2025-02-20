@@ -3,9 +3,9 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: async ({ context }) => {
-    const { token: token } = context.authentication;
-    if (token) {
-      throw redirect({ to: "/" });
+    const { accessToken } = context.authentication;
+    if (accessToken) {
+      throw redirect({ to: "/modules" });
     }
   },
 

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  '/_authenticated/modules/accounting/_accountingLayout/general-ledger/',
+  '/_authenticated/modules/accounting/_layout/general-ledger/',
 )({
   component: RouteComponent,
 })

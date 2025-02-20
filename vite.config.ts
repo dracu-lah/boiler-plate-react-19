@@ -13,7 +13,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       "@/modules": path.resolve(
         __dirname,
-        "./src/routes/_authenticated/modules/",
+        "./src/routes/_authenticated/modules",
       ),
     },
   },

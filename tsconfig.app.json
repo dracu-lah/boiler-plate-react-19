@@ -20,11 +20,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/modules/*": ["src/routes/_authenticated/modules/*"],
-      "@/*": ["src/*"]
-    }
+    "noUncheckedSideEffectImports": true
   }
 }
