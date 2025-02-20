@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      "@/modules/*": ["./src/routes/_authenticated/modules/*"]
+      "@/*": ["./src/*"]
     }
   },
   "files": [],
