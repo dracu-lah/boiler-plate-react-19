@@ -21,7 +21,7 @@ export const Header = () => {
         <Button
           variant="link"
           className="p-0 text-2xl font-bold"
-          onClick={() => router.navigate({ to: "/" })}
+          onClick={() => router.navigate({ to: "/modules" })}
         >
           KeyTracker
         </Button>

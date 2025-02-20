@@ -1,9 +1,9 @@
-import { useAuth } from "@/hooks/useAuth";
+import useAuthStore from "@/store/useAuthStore";
 import { Link } from "@tanstack/react-router";
 import { BookOpen, FileText, LogIn } from "lucide-react";
 
 export const Sidebar = () => {
-  const { token } = useAuth();
+  const { accessToken } = useAuthStore();
 
   const navigationItems = [
     {
@@ -30,7 +30,7 @@ export const Sidebar = () => {
       {/* Navigation */}
       <nav className="flex-1 py-4">
         <div className="px-3">
-          {!token && (
+          {!accessToken && (
             <Link
               to="/login"
               className="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors mb-2 dark:text-gray-300 dark:hover:bg-gray-800"

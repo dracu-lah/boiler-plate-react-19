@@ -48,7 +48,7 @@ export default function LoginForm() {
         },
       });
 
-      navigate({ to: "/" });
+      navigate({ to: "/modules" });
     },
     onError: (error) => {
       console.error("Login failed:", error);
