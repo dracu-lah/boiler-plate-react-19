@@ -5,6 +5,10 @@ const auth = {
   refreshToken: "/auth/refresh",
 };
 
+const keys = {
+  get: "/api/keys",
+};
 export default {
   auth,
+  keys,
 };

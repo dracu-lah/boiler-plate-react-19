@@ -50,7 +50,7 @@ const setTenantHeader = () => {
 };
 // Helper function to set axios authorization header
 const setAxiosAuthHeader = (token: string | null) => {
-  setTenantHeader();
+  // setTenantHeader();
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {

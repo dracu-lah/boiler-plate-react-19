@@ -38,7 +38,17 @@ export default function LoginForm() {
   const mutation = useMutation<LoginResponse, Error, LoginCredentials>({
     mutationFn: api.auth.login,
     onSuccess: ({ access_token }) => {
-      setToken({ data: { accessToken: access_token } });
+      setToken({
+        data: {
+          accessToken: access_token,
+          refreshToken: "your-refresh-token",
+          data: {
+            roleName: "admin",
+            userId: "123",
+            permissions: ["read", "write"],
+          },
+        },
+      });
 
       navigate({ to: "/" });
     },
