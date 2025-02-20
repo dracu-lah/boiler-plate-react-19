@@ -5,6 +5,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import exp from "constants";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -93,3 +94,4 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+export { axios as api };

@@ -1,4 +1,4 @@
-import { axios } from "@/configs/axios";
+import axios from "axios";
 import endPoint from "../endPoint";
 
 export default {

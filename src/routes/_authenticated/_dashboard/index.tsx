@@ -8,9 +8,8 @@ export const Route = createFileRoute("/_authenticated/_dashboard/")({
 function RouteComponent() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["apiService.keys.getKeys"],
-    queryFn: apiService.keys.getKeys,
+    queryFn: () => apiService.keys.getKeys(),
   });
-  console.log("data", data);
   if (isLoading) {
     return "...loading";
   }
