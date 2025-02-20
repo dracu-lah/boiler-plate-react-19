@@ -1,4 +1,3 @@
-// Authentication Endpoints
 const auth = {
   login: "/api/login",
   logout: "/auth/logout",

@@ -1,37 +1,32 @@
-import { BASE_URL } from "@/constants/config";
-import endPoint from "@/services/api/endPoint";
 import axios, {
   AxiosError,
+  AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import exp from "constants";
+import { BASE_URL } from "@/constants/config";
+import endPoint from "@/services/api/endPoint";
 
-const api = axios.create({
+// Extended request config to track retry attempts
+interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
+// Create axios instance
+const api: AxiosInstance = axios.create({
   baseURL: BASE_URL,
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
+  headers: { "Content-Type": "application/json" },
 });
 
-/**
- * Queue to hold pending requests while refreshing the token
- */
+// Set initial token if available
+const token = localStorage.getItem("token");
+if (token) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
+
+// Token refresh implementation
 let refreshTokenPromise: Promise<string | null> | null = null;
 
-/**
- * Refresh token API implementation
- */
-const RefreshTokenAPI = async (tokens: {
-  refreshToken: string;
-  accessToken: string;
-}) => {
-  return api.post<{ accessToken: string }>(endPoint.auth.refreshToken, tokens);
-};
-
-/**
- * Refreshes the access token using the refresh token stored in localStorage
- */
 const refreshToken = async (): Promise<string | null> => {
   if (!refreshTokenPromise) {
     refreshTokenPromise = (async () => {
@@ -41,36 +36,29 @@ const refreshToken = async (): Promise<string | null> => {
 
         if (!refreshToken || !accessToken) throw new Error("No tokens found");
 
-        const { data } = await RefreshTokenAPI({ refreshToken, accessToken });
+        const { data } = await api.post<{ accessToken: string }>(
+          endPoint.auth.refreshToken,
+          { refreshToken, accessToken },
+        );
+
         localStorage.setItem("token", data.accessToken);
         api.defaults.headers.common["Authorization"] =
           `Bearer ${data.accessToken}`;
-
         return data.accessToken;
       } catch (error) {
-        console.error("Token refresh failed:", error);
+        console.error(error);
         localStorage.clear();
         window.location.reload();
         return null;
       } finally {
-        refreshTokenPromise = null; // Reset promise after refresh attempt
+        refreshTokenPromise = null;
       }
     })();
   }
-
   return refreshTokenPromise;
 };
 
-/**
- * Extended Axios request config to include retry flag
- */
-interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
-  _retry?: boolean;
-}
-
-/**
- * Axios response interceptor for handling token expiration
- */
+// Response interceptor
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
@@ -78,10 +66,10 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const newAccessToken = await refreshToken();
+      const newToken = await refreshToken();
 
-      if (newAccessToken && originalRequest.headers) {
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+      if (newToken && originalRequest.headers) {
+        originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
         return api(originalRequest);
       }
     }
@@ -94,4 +82,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-export { axios as api };
+
+export default api;

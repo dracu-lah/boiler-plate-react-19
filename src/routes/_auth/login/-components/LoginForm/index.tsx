@@ -1,5 +1,4 @@
-import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Building2Icon, Eye, EyeOff } from "lucide-react";
@@ -10,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import BasicFormField from "@/components/common/FormElements/BasicFormField";
 import api from "@/services/api";
+import useAuthStore from "@/store/useAuthStore";
 
 // Define validation schema using Zod
 const loginSchema = z.object({
@@ -25,7 +25,7 @@ interface LoginResponse {
 }
 type LoginFormInputs = z.infer<typeof loginSchema>;
 export default function LoginForm() {
-  const { setToken } = useAuth();
+  const { setToken } = useAuthStore();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,14 +39,12 @@ export default function LoginForm() {
     mutationFn: api.auth.login,
     onSuccess: ({ access_token }) => {
       setToken({
+        accessToken: access_token,
+        refreshToken: "your-refresh-token",
         data: {
-          accessToken: access_token,
-          refreshToken: "your-refresh-token",
-          data: {
-            roleName: "admin",
-            userId: "123",
-            permissions: ["read", "write"],
-          },
+          roleName: "admin",
+          userId: "123",
+          permissions: ["read", "write"],
         },
       });
 
@@ -62,7 +60,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md  m-4">
       <CardHeader className="text-center space-y-6">
         <div className="mx-auto h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center ring-2 ring-primary/20">
           <Building2Icon className="h-6 w-6 text-primary" />
@@ -79,20 +77,18 @@ export default function LoginForm() {
               required
               type="text"
             />
-            <div className="relative">
+            <div className="relative ">
               <BasicFormField
                 name="password"
                 label="Password"
                 placeholder="Enter your password"
                 required
                 type={showPassword ? "text" : "password"}
-                className="pr-10"
               />
-              <Button
+
+              <button
                 type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-2 top-9 transform -translate-y-1/2 p-2 hover:bg-transparent"
+                className="absolute bottom-2 right-2 "
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -100,7 +96,7 @@ export default function LoginForm() {
                 ) : (
                   <Eye className="h-5 w-5 text-muted-foreground" />
                 )}
-              </Button>
+              </button>
             </div>
             <Button
               type="submit"
