@@ -19,9 +19,9 @@ const api: AxiosInstance = axios.create({
 });
 
 // Set initial token if available
-const token = localStorage.getItem("token");
-if (token) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+const accessToken = localStorage.getItem("accessToken");
+if (accessToken) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 }
 
 // Token refresh implementation
@@ -66,18 +66,18 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const newToken = await refreshToken();
+      const newAccessToken = await refreshToken();
 
-      if (newToken && originalRequest.headers) {
-        originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+      if (newAccessToken && originalRequest.headers) {
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       }
     }
 
-    if (error.response?.status === 403) {
-      localStorage.clear();
-      window.location.reload();
-    }
+    // if (error.response?.status === 403) {
+    //   localStorage.clear();
+    //   window.location.reload();
+    // }
 
     return Promise.reject(error);
   },
