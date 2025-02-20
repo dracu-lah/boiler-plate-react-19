@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/modules/*": ["./src/routes/_authenticated/modules/*"]
+    }
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
