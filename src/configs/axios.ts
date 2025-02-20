@@ -70,28 +70,26 @@ interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
 /**
  * Axios response interceptor for handling token expiration
  */
-// api.interceptors.response.use(
-//   (response: AxiosResponse) => response,
-//   async (error: AxiosError) => {
-//     const originalRequest = error.config as ExtendedAxiosRequestConfig;
-//
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-//       const newAccessToken = await refreshToken();
-//
-//       if (newAccessToken && originalRequest.headers) {
-//         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-//         return api(originalRequest);
-//       }
-//     }
-//
-//     if (error.response?.status === 403) {
-//       localStorage.clear();
-//       window.location.reload();
-//     }
-//
-//     return Promise.reject(error);
-//   },
-// );
+api.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  async (error: AxiosError) => {
+    const originalRequest = error.config as ExtendedAxiosRequestConfig;
 
-export { api as axios };
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const newAccessToken = await refreshToken();
+
+      if (newAccessToken && originalRequest.headers) {
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        return api(originalRequest);
+      }
+    }
+
+    if (error.response?.status === 403) {
+      localStorage.clear();
+      window.location.reload();
+    }
+
+    return Promise.reject(error);
+  },
+);
