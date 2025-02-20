@@ -19,7 +19,6 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as PublicAboutIndexImport } from './routes/_public/about/index'
 import { Route as AuthenticatedModulesIndexImport } from './routes/_authenticated/modules/index'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
-import { Route as AuthRegisterIndexImport } from './routes/_auth/register/index'
 import { Route as AuthLoginIndexImport } from './routes/_auth/login/index'
 import { Route as AuthenticatedModulesUsersIndexImport } from './routes/_authenticated/modules/users/index'
 import { Route as AuthenticatedModulesAccountingIndexImport } from './routes/_authenticated/modules/accounting/index'
@@ -86,12 +85,6 @@ const AuthenticatedDashboardIndexRoute =
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-
-const AuthRegisterIndexRoute = AuthRegisterIndexImport.update({
-  id: '/register/',
-  path: '/register/',
-  getParentRoute: () => AuthRoute,
-} as any)
 
 const AuthLoginIndexRoute = AuthLoginIndexImport.update({
   id: '/login/',
@@ -178,13 +171,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginIndexImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/register/': {
-      id: '/_auth/register/'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof AuthRegisterIndexImport
       parentRoute: typeof AuthImport
     }
     '/_authenticated/dashboard/': {
@@ -278,12 +264,10 @@ declare module '@tanstack/react-router' {
 
 interface AuthRouteChildren {
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
-  AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginIndexRoute: AuthLoginIndexRoute,
-  AuthRegisterIndexRoute: AuthRegisterIndexRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -389,7 +373,6 @@ const PublicRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof PublicRouteWithChildren
   '/login': typeof AuthLoginIndexRoute
-  '/register': typeof AuthRegisterIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
@@ -405,7 +388,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof PublicRouteWithChildren
   '/login': typeof AuthLoginIndexRoute
-  '/register': typeof AuthRegisterIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/modules': typeof AuthenticatedModulesIndexRoute
   '/about': typeof PublicAboutIndexRoute
@@ -422,7 +404,6 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_auth/login/': typeof AuthLoginIndexRoute
-  '/_auth/register/': typeof AuthRegisterIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/modules/': typeof AuthenticatedModulesIndexRoute
   '/_public/about/': typeof PublicAboutIndexRoute
@@ -442,7 +423,6 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
-    | '/register'
     | '/dashboard'
     | '/modules'
     | '/about'
@@ -457,7 +437,6 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/login'
-    | '/register'
     | '/dashboard'
     | '/modules'
     | '/about'
@@ -472,7 +451,6 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_public'
     | '/_auth/login/'
-    | '/_auth/register/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/modules/'
     | '/_public/about/'
@@ -518,8 +496,7 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/login/",
-        "/_auth/register/"
+        "/_auth/login/"
       ]
     },
     "/_authenticated": {
@@ -539,10 +516,6 @@ export const routeTree = rootRoute
     },
     "/_auth/login/": {
       "filePath": "_auth/login/index.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/register/": {
-      "filePath": "_auth/register/index.tsx",
       "parent": "/_auth"
     },
     "/_authenticated/dashboard/": {

@@ -1,14 +1,14 @@
 import { IS_TESTING } from "@/constants/config";
-import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
 import ThemeToggle from "../../ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import useAuthStore from "@/store/useAuthStore";
 
 export const Header = () => {
   const router = useRouter();
-  const { token, clearToken } = useAuth();
+  const { accessToken, clearToken } = useAuthStore();
 
   const handleLogout = () => {
     clearToken();
@@ -21,13 +21,13 @@ export const Header = () => {
         <Button
           variant="link"
           className="p-0 text-2xl font-bold"
-          onClick={() => router.navigate({ to: "/modules" })}
+          onClick={() => router.navigate({ to: "/" })}
         >
-          ProductERP
+          KeyTracker
         </Button>
 
         <div className="flex items-center gap-x-10">
-          {token && (
+          {accessToken && (
             <div className="flex items-center gap-6">
               {IS_TESTING && (
                 <Badge variant="destructive" className="font-medium">

@@ -1,123 +1,119 @@
-import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Building2, Eye, EyeOff } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { Building2Icon, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import BasicFormField from "@/components/common/FormElements/BasicFormField";
+import api from "@/services/api";
+import useAuthStore from "@/store/useAuthStore";
 
-interface LoginFormProps {
-  tenant: string;
-  onChangeTenant: () => void;
+// Define validation schema using Zod
+const loginSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
+});
+interface LoginCredentials {
+  username: string;
+  password: string;
 }
-
-export default function LoginForm({ tenant, onChangeTenant }: LoginFormProps) {
-  const { setToken } = useAuth();
+interface LoginResponse {
+  access_token: string;
+}
+type LoginFormInputs = z.infer<typeof loginSchema>;
+export default function LoginForm() {
+  const { setToken } = useAuthStore();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
-    setIsLoading(true);
-    try {
-      const loginData = {
-        accessToken: "your-access-token",
+  const form = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { username: "", password: "" },
+  });
+
+  // TanStack Query Mutation for handling login
+  const mutation = useMutation<LoginResponse, Error, LoginCredentials>({
+    mutationFn: api.auth.login,
+    onSuccess: ({ access_token }) => {
+      setToken({
+        accessToken: access_token,
         refreshToken: "your-refresh-token",
         data: {
           roleName: "admin",
           userId: "123",
           permissions: ["read", "write"],
         },
-      };
-      await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate API call
-      setToken({ data: loginData });
-      navigate({ to: "/modules" });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      });
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleLogin();
-    }
+      navigate({ to: "/" });
+    },
+    onError: (error) => {
+      console.error("Login failed:", error);
+    },
+  });
+
+  const onSubmit = (data: LoginFormInputs) => {
+    mutation.mutate(data);
   };
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md  m-4">
       <CardHeader className="text-center space-y-6">
         <div className="mx-auto h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center ring-2 ring-primary/20">
-          <Building2 className="h-6 w-6 text-primary" />
+          <Building2Icon className="h-6 w-6 text-primary" />
         </div>
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold tracking-tight">Welcome Back</h2>
-          <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
-            <span>Logged into tenant:</span>
-            <span className="font-semibold text-foreground">{tenant}</span>
-          </div>
-        </div>
+        <h2 className="text-2xl font-bold tracking-tight">Welcome Back</h2>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              onKeyPress={handleKeyPress}
-              className="transition-shadow focus:ring-2 focus:ring-primary/20"
+        <FormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <BasicFormField
+              name="username"
+              label="Username"
+              placeholder="Enter your username"
+              required
+              type="text"
             />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+            <div className="relative ">
+              <BasicFormField
+                name="password"
+                label="Password"
                 placeholder="Enter your password"
-                onKeyPress={handleKeyPress}
-                className="pr-10 transition-shadow focus:ring-2 focus:ring-primary/20"
+                required
+                type={showPassword ? "text" : "password"}
               />
-              <Button
+
+              <button
                 type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                className="absolute bottom-2 right-2 "
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeOff className="h-4 w-4 text-muted-foreground" />
+                  <EyeOff className="h-5 w-5 text-muted-foreground" />
                 ) : (
-                  <Eye className="h-4 w-4 text-muted-foreground" />
+                  <Eye className="h-5 w-5 text-muted-foreground" />
                 )}
-              </Button>
+              </button>
             </div>
-          </div>
-        </div>
-        <div className="space-y-4">
-          <Button
-            onClick={handleLogin}
-            className="w-full font-semibold"
-            disabled={isLoading}
-          >
-            {isLoading ? "Signing in..." : "Sign In"}
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={onChangeTenant}
-            className="w-full text-sm hover:bg-primary/5"
-          >
-            Change Tenant
-          </Button>
-        </div>
+            <Button
+              type="submit"
+              className="w-full font-semibold"
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending ? "Signing in..." : "Sign In"}
+            </Button>
+            {mutation.isError && (
+              <p className="text-red-500 text-sm text-center">
+                {mutation.error instanceof Error
+                  ? mutation.error.message
+                  : "Login failed"}
+              </p>
+            )}
+          </form>
+        </FormProvider>
       </CardContent>
     </Card>
   );

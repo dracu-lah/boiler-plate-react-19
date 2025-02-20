@@ -1,7 +1,7 @@
 import auth from "./auth";
-import dashboard from "./others/dashboard/dashboard";
+import keys from "./keys";
 
 export default {
   auth,
-  dashboard,
+  keys,
 };
