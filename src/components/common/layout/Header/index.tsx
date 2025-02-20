@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 
 export const Header = () => {
   const router = useRouter();
-  const { token, clearToken } = useAuth();
+  const { token: token, clearToken } = useAuth();
 
   const handleLogout = () => {
     clearToken();

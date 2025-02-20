@@ -1,6 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { Building2Icon, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,15 +9,21 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import BasicFormField from "@/components/common/FormElements/BasicFormField";
+import api from "@/services/api";
 
 // Define validation schema using Zod
 const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
   password: z.string().min(1, "Password is required"),
 });
-
+interface LoginCredentials {
+  username: string;
+  password: string;
+}
+interface LoginResponse {
+  access_token: string;
+}
 type LoginFormInputs = z.infer<typeof loginSchema>;
-
 export default function LoginForm() {
   const { setToken } = useAuth();
   const navigate = useNavigate();
@@ -27,23 +34,21 @@ export default function LoginForm() {
     defaultValues: { username: "", password: "" },
   });
 
-  const onSubmit = async (data: LoginFormInputs) => {
-    try {
-      const loginData = {
-        accessToken: "your-access-token",
-        refreshToken: "your-refresh-token",
-        data: {
-          roleName: "admin",
-          userId: "123",
-          permissions: ["read", "write"],
-        },
-      };
-      await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate API call
-      setToken({ data: loginData });
+  // TanStack Query Mutation for handling login
+  const mutation = useMutation<LoginResponse, Error, LoginCredentials>({
+    mutationFn: api.auth.login,
+    onSuccess: ({ access_token }) => {
+      setToken({ data: { accessToken: access_token } });
+
       navigate({ to: "/" });
-    } catch (error) {
-      console.error("Login failed", error);
-    }
+    },
+    onError: (error) => {
+      console.error("Login failed:", error);
+    },
+  });
+
+  const onSubmit = (data: LoginFormInputs) => {
+    mutation.mutate(data);
   };
 
   return (
@@ -71,12 +76,13 @@ export default function LoginForm() {
                 placeholder="Enter your password"
                 required
                 type={showPassword ? "text" : "password"}
+                className="pr-10"
               />
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="absolute right-0 top-6    p-2 hover:bg-transparent"
+                className="absolute right-2 top-9 transform -translate-y-1/2 p-2 hover:bg-transparent"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -89,10 +95,17 @@ export default function LoginForm() {
             <Button
               type="submit"
               className="w-full font-semibold"
-              disabled={form.formState.isSubmitting}
+              disabled={mutation.isPending}
             >
-              {form.formState.isSubmitting ? "Signing in..." : "Sign In"}
+              {mutation.isPending ? "Signing in..." : "Sign In"}
             </Button>
+            {mutation.isError && (
+              <p className="text-red-500 text-sm text-center">
+                {mutation.error instanceof Error
+                  ? mutation.error.message
+                  : "Login failed"}
+              </p>
+            )}
           </form>
         </FormProvider>
       </CardContent>

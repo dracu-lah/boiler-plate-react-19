@@ -1,6 +1,6 @@
 // Authentication Endpoints
 const auth = {
-  login: "/auth/login",
+  login: "/api/login",
   logout: "/auth/logout",
   refreshToken: "/auth/refresh",
 };
