@@ -24,12 +24,12 @@ export const menuItemsConfig: MenuItemType[] = [
     subMenu: [
       {
         label: "Manage Roles",
-        route: "/modules/users/roles/",
+        route: "/modules/users/roles",
       },
 
       {
         label: "Manage Users",
-        route: "/modules/users/users/",
+        route: "/modules/users/users",
       },
     ],
   },
