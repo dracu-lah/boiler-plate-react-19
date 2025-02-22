@@ -41,7 +41,7 @@ const refreshToken = async (): Promise<string | null> => {
           { refreshToken, accessToken },
         );
 
-        localStorage.setItem("token", data.accessToken);
+        localStorage.setItem("accessToken", data.accessToken);
         api.defaults.headers.common["Authorization"] =
           `Bearer ${data.accessToken}`;
         return data.accessToken;
