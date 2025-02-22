@@ -32,7 +32,7 @@ const refreshToken = async (): Promise<string | null> => {
     refreshTokenPromise = (async () => {
       try {
         const refreshToken = localStorage.getItem("refreshToken");
-        const accessToken = localStorage.getItem("token");
+        const accessToken = localStorage.getItem("accessToken");
 
         if (!refreshToken || !accessToken) throw new Error("No tokens found");
 
@@ -74,10 +74,10 @@ api.interceptors.response.use(
       }
     }
 
-    // if (error.response?.status === 403) {
-    //   localStorage.clear();
-    //   window.location.reload();
-    // }
+    if (error.response?.status === 403) {
+      localStorage.clear();
+      window.location.reload();
+    }
 
     return Promise.reject(error);
   },
